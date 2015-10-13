@@ -2,6 +2,7 @@ package com.github.torczuk.sherlock.service
 
 import com.github.torczuk.sherlock.domain.EntryPoint
 import spock.lang.Specification
+import spock.lang.*
 
 class EntryPointMapServiceFeatureTest extends Specification {
 

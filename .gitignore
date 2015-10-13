@@ -1,3 +1,5 @@
 .idea/*
 .gradle/*
 sherlock.iml
+sherlock.ipr
+sherlock.iws

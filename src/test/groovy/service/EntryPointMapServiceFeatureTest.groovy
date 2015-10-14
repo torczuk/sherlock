@@ -8,17 +8,17 @@ class EntryPointMapServiceFeatureTest extends Specification {
 
     def 'traverse the given location and find its all links'() {
         given:
-        EntryPoint entryPoint = new EntryPoint('http://127.0.0.1:4567/')
+        EntryPoint entryPoint = new EntryPoint('http://127.0.0.1:4567')
         EntryPointMapService entryPointMapService = new EntryPointMapService()
 
         when:
         def map = entryPointMapService.map(entryPoint) as Map
 
         then:
-        map.each { key, value -> key } as Set ==
-                ['http://127.0.0.1:4567/',
+        map.collect { key, value -> key } as Set ==
+                ['http://127.0.0.1:4567',
                  'http://127.0.0.1:4567/index.html',
                  'http://127.0.0.1:4567/about.html',
-                 'http://127.0.0.1:4567/offer.html']
+                 'http://127.0.0.1:4567/offer.html'] as Set
     }
 }

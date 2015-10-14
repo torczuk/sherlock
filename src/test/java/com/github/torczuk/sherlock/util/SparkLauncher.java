@@ -8,11 +8,8 @@ public class SparkLauncher {
     }
 
     public static void startLauncher() {
-        Runnable spark = () -> {
-            staticFileLocation("/public");
-            get("/", (req, res) -> "<a href=\"/index.html\">index</a>");
-        };
-        new Thread(spark).start();
+        staticFileLocation("/public");
+        get("/", (req, res) -> "<a href=\"/index.html\">index</a>");
     }
 
     public static void stopLauncher() {

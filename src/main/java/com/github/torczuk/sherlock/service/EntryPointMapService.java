@@ -6,6 +6,8 @@ import com.github.torczuk.sherlock.domain.EntryPoint;
 import java.io.IOException;
 import java.util.*;
 
+import static java.util.stream.Collectors.toSet;
+
 public class EntryPointMapService {
 
     private ContentService contentService = new ContentService();
@@ -20,13 +22,18 @@ public class EntryPointMapService {
         Queue<String> locations = new LinkedList<>();
         locations.add(entryPoint.location());
 
-        while(!locations.isEmpty()) {
+        while (!locations.isEmpty()) {
             String location = locations.poll();
             EntryPoint entry = new EntryPoint(location);
             Content entryContent = contentService.contentFor(entry);
-            Set<String> links = findLinks.apply(entryContent.toString());
+            Set<String> links = findLinks.apply(entryContent.toString()).stream().map(link ->
+                    {
+                        if (link.startsWith("http")) return link;
+                        else return entryPoint.location() + link;
+                    }
+            ).collect(toSet());
             for (String link : links) {
-                if(!map.containsKey(link)) {
+                if (!map.containsKey(link)) {
                     locations.add(link);
                 }
             }

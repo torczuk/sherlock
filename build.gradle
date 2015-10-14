@@ -1,6 +1,9 @@
+import com.github.torczuk.sherlock.plugin.spark.SparkLauncher
+
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'groovy'
+apply plugin: SparkLauncher
 
 repositories {
     mavenCentral()
@@ -12,3 +15,17 @@ dependencies {
     testCompile 'org.codehaus.groovy:groovy-all:2.4.5'
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 }
+
+//TODO: pass classpath to the buildscript
+sparkConfig {
+    publicFiles = '/public'
+    mapping = [
+            '/': file('src/test/resources/public/index.html').text,
+            '/index.html': file('src/test/resources/public/index.html').text,
+            '/about.html': file('src/test/resources/public/about.html').text,
+            '/offer.html': file('src/test/resources/public/offer.html').text
+    ]
+}
+
+test.dependsOn startSpark
+test.finalizedBy stopSpark

@@ -1,7 +1,7 @@
 package com.github.torczuk.sherlock.service
 
 import com.github.torczuk.sherlock.domain.Content
-import com.github.torczuk.sherlock.domain.EntryPoint
+import com.github.torczuk.sherlock.domain.HomePage
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
@@ -16,7 +16,7 @@ class ContentServiceTest extends Specification {
 
     def 'find content for given entry point'() {
         given:
-        EntryPoint entryPoint = anEntryPoint()
+        HomePage entryPoint = anEntryPoint()
 
         when:
         Content contentFor = contentService.contentFor(entryPoint)
@@ -25,11 +25,11 @@ class ContentServiceTest extends Specification {
         contentFor.toString() == 'Content of the file'
     }
 
-    EntryPoint anEntryPoint() {
+    HomePage anEntryPoint() {
         File entryPointFile = temporaryFolder.newFile("index")
         entryPointFile.withWriter { writer ->
             writer.write('Content of the file')
         }
-        new EntryPoint("file:///${entryPointFile.absolutePath}")
+        new HomePage("file:///${entryPointFile.absolutePath}")
     }
 }

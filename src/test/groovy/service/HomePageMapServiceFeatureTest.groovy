@@ -1,14 +1,13 @@
 package com.github.torczuk.sherlock.service
 
-import com.github.torczuk.sherlock.domain.EntryPoint
+import com.github.torczuk.sherlock.domain.HomePage
 import spock.lang.Specification
-import spock.lang.*
 
-class EntryPointMapServiceFeatureTest extends Specification {
+class HomePageMapServiceFeatureTest extends Specification {
 
     def 'traverse the given location and find its all links'() {
         given:
-        EntryPoint entryPoint = new EntryPoint('http://127.0.0.1:4567')
+        HomePage entryPoint = new HomePage('http://127.0.0.1:4567')
         EntryPointMapService entryPointMapService = new EntryPointMapService()
 
         when:

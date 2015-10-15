@@ -1,7 +1,7 @@
 package com.github.torczuk.sherlock.service;
 
 import com.github.torczuk.sherlock.domain.Content;
-import com.github.torczuk.sherlock.domain.EntryPoint;
+import com.github.torczuk.sherlock.domain.HomePage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,8 +10,8 @@ import java.net.URL;
 import java.util.stream.Collector;
 
 public class ContentService {
-    public Content contentFor(EntryPoint entryPoint) throws IOException {
-        String location = entryPoint.location();
+    public Content contentFor(HomePage homePage) throws IOException {
+        String location = homePage.url();
         URL uri = new URL(location);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(uri.openStream()))) {
             String value = br.lines().collect(Collector.of(StringBuilder::new,

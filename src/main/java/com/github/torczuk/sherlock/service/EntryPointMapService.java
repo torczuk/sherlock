@@ -1,7 +1,7 @@
 package com.github.torczuk.sherlock.service;
 
 import com.github.torczuk.sherlock.domain.Content;
-import com.github.torczuk.sherlock.domain.EntryPoint;
+import com.github.torczuk.sherlock.domain.HomePage;
 
 import java.io.IOException;
 import java.util.*;
@@ -13,23 +13,23 @@ public class EntryPointMapService {
     private ContentService contentService = new ContentService();
     private FindLinks findLinks = new FindLinks();
 
-    public Map<String, Content> map(EntryPoint entryPoint) throws IOException {
+    public Map<String, Content> map(HomePage homePage) throws IOException {
         Map<String, Content> map = new HashMap<>();
 
-        Content content = contentService.contentFor(entryPoint);
-        map.put(entryPoint.location(), content);
+        Content content = contentService.contentFor(homePage);
+        map.put(homePage.url(), content);
 
         Queue<String> locations = new LinkedList<>();
-        locations.add(entryPoint.location());
+        locations.add(homePage.url());
 
         while (!locations.isEmpty()) {
             String location = locations.poll();
-            EntryPoint entry = new EntryPoint(location);
+            HomePage entry = new HomePage(location);
             Content entryContent = contentService.contentFor(entry);
             Set<String> links = findLinks.apply(entryContent.toString()).stream().map(link ->
                     {
                         if (link.startsWith("http")) return link;
-                        else return entryPoint.location() + link;
+                        else return homePage.url() + link;
                     }
             ).collect(toSet());
             for (String link : links) {

@@ -1,5 +1,7 @@
 package com.github.torczuk.sherlock.domain;
 
+import java.util.Objects;
+
 public class HomePage implements WebPage {
 
     private final String url;
@@ -16,5 +18,18 @@ public class HomePage implements WebPage {
     @Override
     public HomePage homePage() {
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HomePage homePage = (HomePage) o;
+        return Objects.equals(url, homePage.url);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(url);
     }
 }

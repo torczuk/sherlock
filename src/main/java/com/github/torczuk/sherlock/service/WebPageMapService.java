@@ -29,6 +29,7 @@ public class WebPageMapService {
             Content pageContent = contentService.contentFor(page);
             Set<SubPage> pages = findLinks.apply(pageContent.toString())
                     .stream()
+                    .filter(link -> !link.equals(homePage.url()))
                     .map(link -> new SubPage(homePage, link))
                     .collect(toSet());
             for (SubPage link : pages) {

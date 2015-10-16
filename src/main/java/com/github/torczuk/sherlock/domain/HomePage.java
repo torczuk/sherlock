@@ -23,9 +23,9 @@ public class HomePage implements WebPage {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HomePage homePage = (HomePage) o;
-        return Objects.equals(url, homePage.url);
+        if (!(o instanceof WebPage)) return false;
+        WebPage webPage = (WebPage) o;
+        return Objects.equals(url, webPage.url());
     }
 
     @Override

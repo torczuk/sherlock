@@ -27,15 +27,21 @@ public class SubPage implements WebPage {
     }
 
     private static String concat(String homePageUrl, String url) {
-        return url.startsWith("/") ? homePageUrl + url : homePageUrl + "/" + url;
+        if ("/".equals(url)) {
+            return homePageUrl;
+        } else if (url.startsWith("/")) {
+            return homePageUrl + url;
+        } else {
+            return homePageUrl + "/" + url;
+        }
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SubPage subPage = (SubPage) o;
-        return Objects.equals(url, subPage.url);
+        if (!(o instanceof WebPage)) return false;
+        WebPage webPage = (WebPage) o;
+        return Objects.equals(url, webPage.url());
     }
 
     @Override

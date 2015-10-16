@@ -17,10 +17,6 @@ public class WebPageMapService {
 
     public Map<String, Content> map(HomePage homePage) throws IOException {
         Map<String, Content> result = new HashMap<>();
-
-        Content content = contentService.contentFor(homePage);
-        result.put(homePage.url(), content);
-
         Queue<WebPage> locations = new LinkedList<>();
         locations.add(homePage);
 
@@ -29,7 +25,6 @@ public class WebPageMapService {
             Content pageContent = contentService.contentFor(page);
             Set<SubPage> pages = findLinks.apply(pageContent.toString())
                     .stream()
-                    .filter(link -> !link.equals(homePage.url()))
                     .map(link -> new SubPage(homePage, link))
                     .collect(toSet());
             for (SubPage link : pages) {

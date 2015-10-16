@@ -16,8 +16,8 @@ public class HomePage implements WebPage {
     }
 
     @Override
-    public HomePage homePage() {
-        return this;
+    public WebPage parent() {
+        return null;
     }
 
     @Override

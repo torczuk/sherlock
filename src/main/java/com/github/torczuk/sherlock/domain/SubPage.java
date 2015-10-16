@@ -1,19 +1,16 @@
 package com.github.torczuk.sherlock.domain;
 
+import java.net.URI;
 import java.util.Objects;
 
 public class SubPage implements WebPage {
 
-    final private HomePage homePage;
+    final private WebPage parent;
     final private String url;
 
-    public SubPage(HomePage homePage, String url) {
-        this.url = concat(homePage.url(), url);
-        this.homePage = homePage;
-    }
-
-    public HomePage webPage() {
-        return homePage;
+    public SubPage(HomePage parent, String url) {
+        this.url = URI.create(parent.url()).resolve(url).toString();
+        this.parent = parent;
     }
 
     @Override
@@ -22,18 +19,8 @@ public class SubPage implements WebPage {
     }
 
     @Override
-    public HomePage homePage() {
-        return homePage;
-    }
-
-    private static String concat(String homePageUrl, String url) {
-        if ("/".equals(url)) {
-            return homePageUrl;
-        } else if (url.startsWith("/")) {
-            return homePageUrl + url;
-        } else {
-            return homePageUrl + "/" + url;
-        }
+    public WebPage parent() {
+        return parent;
     }
 
     @Override

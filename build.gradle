@@ -23,7 +23,8 @@ sparkConfig {
             '/': file('src/test/resources/public/index.html').text,
             '/index.html': file('src/test/resources/public/index.html').text,
             '/about.html': file('src/test/resources/public/about.html').text,
-            '/offer.html': file('src/test/resources/public/offer.html').text
+            '/offer.html': file('src/test/resources/public/offer.html').text,
+            '/about/history': file('src/test/resources/public/history.html').text
     ]
 }
 

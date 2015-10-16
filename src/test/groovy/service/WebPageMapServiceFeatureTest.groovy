@@ -16,8 +16,11 @@ class WebPageMapServiceFeatureTest extends Specification {
         then:
         map.collect { key, value -> key } as Set ==
                 ['http://127.0.0.1:4567',
+                 'http://127.0.0.1:4567/',
                  'http://127.0.0.1:4567/index.html',
                  'http://127.0.0.1:4567/about.html',
-                 'http://127.0.0.1:4567/offer.html'] as Set
+                 'http://127.0.0.1:4567/offer.html',
+                 'http://127.0.0.1:4567/about/history',
+                 'http://127.0.0.1:4567/about/index.html'] as Set
     }
 }

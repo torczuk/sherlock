@@ -1,28 +1,26 @@
 package com.github.torczuk.sherlock.domain
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class SubPageTest extends Specification {
 
-    def 'create valid url when subpage has no slash at the beginning'() {
+    @Unroll
+    def 'create valid url when when from #page #sub '() {
         given:
-        HomePage homePage = new HomePage("http://example.com")
+        WebPage main = new HomePage(page)
 
         when:
-        SubPage subPage = new SubPage(homePage, "subPage")
+        SubPage subPage = new SubPage(main, sub)
 
         then:
-        subPage.url() == 'http://example.com/subPage'
-    }
+        expected == subPage.url()
 
-    def 'create valid url when subpage starts from slash'() {
-        given:
-        HomePage homePage = new HomePage("http://example.com")
-
-        when:
-        SubPage subPage = new SubPage(homePage, "/subPage")
-
-        then:
-        subPage.url() == 'http://example.com/subPage'
+        where:
+        page                            | sub   | expected
+        'http://example.com/1'          | '1'   | 'http://example.com/1'
+        'http://example.com/'           | '/'   | 'http://example.com/'
+        'http://example.com/1.html'     | '2'   | 'http://example.com/2'
+        'http://example.com/1/2'        | '3'   | 'http://example.com/1/3'
     }
 }

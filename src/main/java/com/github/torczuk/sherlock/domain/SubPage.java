@@ -8,7 +8,7 @@ public class SubPage implements WebPage {
     final private WebPage parent;
     final private String url;
 
-    public SubPage(HomePage parent, String url) {
+    public SubPage(WebPage parent, String url) {
         this.url = URI.create(parent.url()).resolve(url).toString();
         this.parent = parent;
     }

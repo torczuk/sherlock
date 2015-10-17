@@ -25,13 +25,10 @@ public class WebPageMapService {
             Content pageContent = contentService.contentFor(page);
             Set<SubPage> pages = findLinks.apply(pageContent.toString())
                     .stream()
-                    .map(link -> new SubPage(homePage, link))
+                    .map(link -> new SubPage(page, link))
+                    .filter(subPage -> !result.containsKey(subPage.url()))
                     .collect(toSet());
-            for (SubPage link : pages) {
-                if (!result.containsKey(link.url())) {
-                    locations.add(link);
-                }
-            }
+            locations.addAll(pages);
             result.put(page.url(), pageContent);
         }
 

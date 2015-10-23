@@ -4,10 +4,10 @@ import spock.lang.Specification
 import spock.lang.Subject
 
 
-class FindLinksTest extends Specification {
+class UrlServiceTest extends Specification {
 
     @Subject
-    private FindLinks findLinks = new FindLinks();
+    private UrlService findLinks = new UrlService();
 
     def 'find all occurrences of entry point on the content'() {
         given:
@@ -25,7 +25,7 @@ class FindLinksTest extends Specification {
         '''
 
         when:
-        Set links = findLinks.apply(content)
+        Set links = findLinks.urls(content)
 
         then:
         links == ["/location1", "/location2"] as Set

@@ -3,6 +3,7 @@ package com.github.torczuk.sherlock.service;
 import com.github.torczuk.sherlock.domain.Content;
 import com.github.torczuk.sherlock.domain.HomePage;
 import com.github.torczuk.sherlock.domain.WebPage;
+import com.google.common.eventbus.EventBus;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -10,13 +10,12 @@ import java.util.stream.Stream;
 import static com.github.torczuk.sherlock.util.spliterators.MatcherSpliterator.matcherStream;
 import static java.util.stream.StreamSupport.stream;
 
-public class FindLinks implements Function<String, Set<String>> {
+public class UrlService {
 
     private static final String HREF_PATTERN = "href(\\s)*=(\\s)*\"([^\"]*)\"";
     Pattern pattern = Pattern.compile(HREF_PATTERN);
 
-    @Override
-    public Set<String> apply(String content) {
+    public Set<String> urls(String content) {
         Stream<Matcher> stream = stream(matcherStream(pattern.matcher(content)), false);
         return stream.filter((matcher) -> matcher.groupCount() == 3)
                 .map((matcher) -> matcher.group(3))

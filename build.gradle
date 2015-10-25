@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    compile 'com.google.guava:guava:18.0'
+
     testCompile  'com.sparkjava:spark-core:2.3'
     testCompile 'junit:junit:4.11'
     testCompile 'org.codehaus.groovy:groovy-all:2.4.5'

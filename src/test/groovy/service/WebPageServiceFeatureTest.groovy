@@ -1,4 +1,4 @@
-package com.github.torczuk.sherlock.service
+package com.github.torczuk.sherlock.domain.service
 
 import spock.lang.Specification
 import spock.lang.Subject

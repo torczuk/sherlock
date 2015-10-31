@@ -1,10 +1,11 @@
-package com.github.torczuk.sherlock.service
+package com.github.torczuk.sherlock.domain.service
 
 import com.github.torczuk.sherlock.domain.model.Content
+import com.github.torczuk.sherlock.infrastructure.service.TikaContentParser
 import spock.lang.Specification
 import spock.lang.Subject
 
-class ContentParserIntegrationTest extends Specification {
+class TikaContentParserIntegrationTest extends Specification {
 
     private static final String HTML = '''<html>
                 <head></head>
@@ -13,12 +14,12 @@ class ContentParserIntegrationTest extends Specification {
                 </body>
             <html>'''
 
-    @Subject ContentParser parser
+    @Subject TikaContentParser parser
 
     def 'should extract plain text from html page'() {
         given:
         Content content = new Content(HTML)
-        parser = new ContentParser()
+        parser = new TikaContentParser()
 
         when:
         String text = parser.parse(content)

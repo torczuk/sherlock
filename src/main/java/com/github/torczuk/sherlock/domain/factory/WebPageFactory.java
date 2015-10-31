@@ -2,7 +2,7 @@ package com.github.torczuk.sherlock.domain.factory;
 
 import com.github.torczuk.sherlock.domain.model.Content;
 import com.github.torczuk.sherlock.domain.model.WebPage;
-import com.github.torczuk.sherlock.service.ContentService;
+import com.github.torczuk.sherlock.domain.service.ContentService;
 
 import java.io.IOException;
 

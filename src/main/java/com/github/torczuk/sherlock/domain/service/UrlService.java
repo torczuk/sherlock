@@ -1,7 +1,6 @@
-package com.github.torczuk.sherlock.service;
+package com.github.torczuk.sherlock.domain.service;
 
 import java.util.Set;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;

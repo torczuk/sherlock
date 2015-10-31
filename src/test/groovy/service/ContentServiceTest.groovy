@@ -1,6 +1,6 @@
-package com.github.torczuk.sherlock.domain.service
+package com.github.torczuk.sherlock.domain.command.service
 
-import com.github.torczuk.sherlock.domain.model.Content
+import com.github.torczuk.sherlock.domain.command.model.Content
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import spock.lang.Specification

@@ -1,6 +1,6 @@
-package com.github.torczuk.sherlock.domain.service
+package com.github.torczuk.sherlock.domain.command.service
 
-import com.github.torczuk.sherlock.domain.model.Content
+import com.github.torczuk.sherlock.domain.command.model.Content
 import com.github.torczuk.sherlock.infrastructure.service.TikaContentParser
 import spock.lang.Specification
 import spock.lang.Subject

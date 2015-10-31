@@ -1,6 +1,6 @@
-package com.github.torczuk.sherlock.domain.service;
+package com.github.torczuk.sherlock.domain.command.service;
 
-import com.github.torczuk.sherlock.domain.model.Content;
+import com.github.torczuk.sherlock.domain.command.model.Content;
 
 import java.io.BufferedReader;
 import java.io.IOException;

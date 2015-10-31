@@ -1,4 +1,4 @@
-package com.github.torczuk.sherlock.domain.service;
+package com.github.torczuk.sherlock.domain.command.service;
 
 import java.util.Set;
 import java.util.regex.Matcher;

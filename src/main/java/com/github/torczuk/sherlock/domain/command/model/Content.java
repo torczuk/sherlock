@@ -1,4 +1,4 @@
-package com.github.torczuk.sherlock.domain.model;
+package com.github.torczuk.sherlock.domain.command.model;
 
 public class Content {
     private final String value;

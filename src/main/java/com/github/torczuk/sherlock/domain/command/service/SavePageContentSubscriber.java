@@ -1,7 +1,7 @@
-package com.github.torczuk.sherlock.domain.service;
+package com.github.torczuk.sherlock.domain.command.service;
 
-import com.github.torczuk.sherlock.domain.model.Content;
-import com.github.torczuk.sherlock.domain.model.WebPage;
+import com.github.torczuk.sherlock.domain.command.model.Content;
+import com.github.torczuk.sherlock.domain.command.model.WebPage;
 import com.google.common.eventbus.Subscribe;
 
 import java.io.File;

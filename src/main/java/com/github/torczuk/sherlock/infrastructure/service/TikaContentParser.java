@@ -1,7 +1,7 @@
 package com.github.torczuk.sherlock.infrastructure.service;
 
-import com.github.torczuk.sherlock.domain.model.Content;
-import com.github.torczuk.sherlock.domain.service.ContentParser;
+import com.github.torczuk.sherlock.domain.command.model.Content;
+import com.github.torczuk.sherlock.domain.command.service.ContentParser;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;

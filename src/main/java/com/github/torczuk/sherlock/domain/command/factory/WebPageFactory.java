@@ -1,8 +1,8 @@
-package com.github.torczuk.sherlock.domain.factory;
+package com.github.torczuk.sherlock.domain.command.factory;
 
-import com.github.torczuk.sherlock.domain.model.Content;
-import com.github.torczuk.sherlock.domain.model.WebPage;
-import com.github.torczuk.sherlock.domain.service.ContentService;
+import com.github.torczuk.sherlock.domain.command.model.Content;
+import com.github.torczuk.sherlock.domain.command.model.WebPage;
+import com.github.torczuk.sherlock.domain.command.service.ContentService;
 
 import java.io.IOException;
 

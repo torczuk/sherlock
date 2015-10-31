@@ -1,4 +1,4 @@
-package com.github.torczuk.sherlock.domain.model;
+package com.github.torczuk.sherlock.domain.command.model;
 
 import java.net.URI;
 import java.util.Objects;

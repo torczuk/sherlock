@@ -1,5 +1,7 @@
 package com.github.torczuk.sherlock.domain
 
+import com.github.torczuk.sherlock.domain.model.Content
+import com.github.torczuk.sherlock.domain.model.WebPage
 import spock.lang.Specification
 
 

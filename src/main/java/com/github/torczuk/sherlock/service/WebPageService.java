@@ -1,7 +1,7 @@
 package com.github.torczuk.sherlock.service;
 
-import com.github.torczuk.sherlock.domain.WebPage;
-import com.github.torczuk.sherlock.factory.WebPageFactory;
+import com.github.torczuk.sherlock.domain.model.WebPage;
+import com.github.torczuk.sherlock.domain.factory.WebPageFactory;
 
 import java.io.IOException;
 import java.util.LinkedHashSet;

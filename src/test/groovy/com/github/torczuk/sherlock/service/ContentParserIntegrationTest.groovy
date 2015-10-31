@@ -1,6 +1,6 @@
 package com.github.torczuk.sherlock.service
 
-import com.github.torczuk.sherlock.domain.Content
+import com.github.torczuk.sherlock.domain.model.Content
 import spock.lang.Specification
 import spock.lang.Subject
 

@@ -13,7 +13,7 @@ some links to the subpages e.g. <a href="/offer">offer</a>
 and some other links to the other pages <a href="http://google.pl">google</a>
 '''
 
-    def 'should extract all links form content of the page'(){
+    def 'should extract all links form content of the page'() {
         given:
         WebPage webPage = new WebPage('http://example.com', new Content(content))
 

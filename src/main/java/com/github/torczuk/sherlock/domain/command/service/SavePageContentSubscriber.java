@@ -18,6 +18,7 @@ public class SavePageContentSubscriber {
         CHARS_TO_ESCAPE.add(Integer.valueOf(':'));
         CHARS_TO_ESCAPE.add(Integer.valueOf('/'));
     }
+
     private String dir;
 
     public SavePageContentSubscriber(String dir) {
@@ -33,7 +34,7 @@ public class SavePageContentSubscriber {
                 .toString();
 
         File file = new File(dir, transformedUrl);
-        try(FileWriter fw = new FileWriter(file);) {
+        try (FileWriter fw = new FileWriter(file);) {
             fw.write(content.toString());
         }
     }

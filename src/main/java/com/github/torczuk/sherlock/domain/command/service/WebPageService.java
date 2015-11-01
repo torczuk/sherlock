@@ -1,7 +1,7 @@
 package com.github.torczuk.sherlock.domain.command.service;
 
-import com.github.torczuk.sherlock.domain.command.model.WebPage;
 import com.github.torczuk.sherlock.domain.command.factory.WebPageFactory;
+import com.github.torczuk.sherlock.domain.command.model.WebPage;
 
 import java.io.IOException;
 import java.util.LinkedHashSet;
@@ -21,7 +21,7 @@ public class WebPageService {
         while (!locations.isEmpty()) {
             String page = locations.poll();
             WebPage webPage = factory.create(page);
-            if(!result.contains(webPage)) {
+            if (!result.contains(webPage)) {
                 locations.addAll(urlsInDomain(homePage, webPage));
             }
             result.add(webPage);

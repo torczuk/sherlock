@@ -8,8 +8,10 @@ import spock.lang.Subject
 
 class ContentServiceTest extends Specification {
 
-    @Subject private ContentService contentService = new ContentService()
-    @Rule private TemporaryFolder temporaryFolder = new TemporaryFolder();
+    @Subject
+    private ContentService contentService = new ContentService()
+    @Rule
+    private TemporaryFolder temporaryFolder = new TemporaryFolder();
 
     def 'find content for given entry point'() {
         given:

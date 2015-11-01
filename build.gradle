@@ -14,6 +14,12 @@ dependencies {
     compile 'org.springframework:spring-context:4.2.2.RELEASE'
     compile 'org.apache.tika:tika-core:1.10'
     compile 'org.apache.tika:tika-parsers:1.10'
+    compile 'org.apache.lucene:lucene-core:5.3.1'
+    compile 'org.apache.lucene:lucene-analyzers-common:5.3.1'
+    compile 'org.apache.lucene:lucene-queryparser:5.3.1'
+    compile 'org.apache.lucene:lucene-queries:5.3.1'
+    compile 'org.apache.lucene:lucene-analyzers-morfologik:5.3.1'
+    compile 'org.apache.lucene:lucene-analyzers-stempel:5.3.1'
 
     testCompile  'com.sparkjava:spark-core:2.3'
     testCompile 'junit:junit:4.11'

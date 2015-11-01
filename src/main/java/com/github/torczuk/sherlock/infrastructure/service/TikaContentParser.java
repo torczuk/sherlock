@@ -17,7 +17,7 @@ public class TikaContentParser implements ContentParser {
 
     @Override
     public String parse(Content content) {
-        try(InputStream stream = new ByteArrayInputStream(content.toString().getBytes(StandardCharsets.UTF_8));) {
+        try (InputStream stream = new ByteArrayInputStream(content.toString().getBytes(StandardCharsets.UTF_8));) {
             BodyContentHandler handler = new BodyContentHandler();
             AutoDetectParser parser = new AutoDetectParser();
             parser.parse(stream, handler, new Metadata());

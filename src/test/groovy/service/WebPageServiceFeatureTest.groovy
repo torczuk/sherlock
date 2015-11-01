@@ -5,7 +5,9 @@ import spock.lang.Subject
 
 class WebPageServiceFeatureTest extends Specification {
 
-    @Subject private  WebPageService webPageMapService = new WebPageService()
+    @Subject
+    private WebPageService webPageMapService = new WebPageService()
+
     def 'traverse the given location and find its all links'() {
         given:
         String homePage = 'http://127.0.0.1:4567'
@@ -14,7 +16,7 @@ class WebPageServiceFeatureTest extends Specification {
         def map = webPageMapService.getAll(homePage) as Set
 
         then:
-        def pages = map.collect{it.url} as Set
+        def pages = map.collect { it.url } as Set
         pages.contains('http://127.0.0.1:4567') == true
         pages.contains('http://127.0.0.1:4567/') == true
         pages.contains('http://127.0.0.1:4567/index.html') == true

@@ -14,7 +14,8 @@ class TikaContentParserIntegrationTest extends Specification {
                 </body>
             <html>'''
 
-    @Subject TikaContentParser parser
+    @Subject
+    TikaContentParser parser
 
     def 'should extract plain text from html page'() {
         given:

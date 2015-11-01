@@ -2,8 +2,8 @@ package com.github.torczuk.sherlock.domain.command.repository;
 
 import com.github.torczuk.sherlock.domain.command.model.WebPage;
 
-public interface WebPageRepository {
+public interface WebPageWriteRepository {
 
-    void save(WebPage webPage);
+    void write(WebPage webPage);
 
 }

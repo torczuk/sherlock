@@ -3,11 +3,9 @@ package com.github.torczuk.sherlock.infrastructure.command.repository;
 import com.github.torczuk.sherlock.domain.command.model.WebPage;
 import com.github.torczuk.sherlock.domain.command.repository.WebPageWriteRepository;
 import com.github.torczuk.sherlock.domain.exception.AppException;
+import com.github.torczuk.sherlock.infrastructure.command.factory.DocumentFactory;
 import org.apache.lucene.analysis.morfologik.MorfologikAnalyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
@@ -19,8 +17,10 @@ public class LuceneWebPageWriteRepository implements WebPageWriteRepository {
 
     private String indexPath;
     private IndexWriter indexWriter;
+    private DocumentFactory documentFactory;
 
     public LuceneWebPageWriteRepository(String indexPath) {
+        this.documentFactory = new DocumentFactory();
         this.indexPath = indexPath;
     }
 
@@ -28,9 +28,7 @@ public class LuceneWebPageWriteRepository implements WebPageWriteRepository {
     public void write(WebPage webPage) {
         try {
             IndexWriter index = getIndex();
-            Document doc = new Document();
-            doc.add(new StringField("url", webPage.url(), Field.Store.YES));
-            doc.add(new TextField("content", webPage.content().toString(), Field.Store.NO));
+            Document doc = documentFactory.create(webPage);
             index.addDocument(doc);
             index.close();
         } catch (IOException e) {

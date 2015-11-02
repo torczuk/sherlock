@@ -33,11 +33,27 @@ class CommandQueryFeatureTest extends Specification {
 
         when:
         writeRepository.write(webPage)
+        writeRepository.flush();
         List<Result> results = readRepository.find(['masło orzechowe'] as Set)
         List<Result> results2 = readRepository.find(['orzechy'] as Set)
 
         then:
         1 == results.size()
         0 == results2.size()
+    }
+
+    def 'multiple search on pages should return the most accurate result' () {
+        given:
+        WebPage firstPage = new WebPage('http://example.com/1', new Content('Cat, dog, turtle, parrot'))
+        WebPage secondPage = new WebPage('http://example.com/2', new Content('parrot, fish'))
+
+        when:
+        writeRepository.write(firstPage)
+        writeRepository.write(secondPage)
+        writeRepository.flush();
+        List<Result> result = readRepository.find(['turtle', 'fish'] as Set)
+
+        then:
+        2 == result.size()
     }
 }

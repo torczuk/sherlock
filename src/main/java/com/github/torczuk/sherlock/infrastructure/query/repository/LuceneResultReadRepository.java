@@ -7,10 +7,7 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.*;
 import org.apache.lucene.store.FSDirectory;
 
 import java.io.File;
@@ -31,11 +28,12 @@ public class LuceneResultReadRepository implements ResultReadRepository {
 
     @Override
     public List<Result> find(Set<String> keyWords) {
-        Query query = createQuery(keyWords);
-//        BooleanQuery.Builder builder = new BooleanQuery.Builder();
-//        builder.add(query, BooleanClause.Occur.MUST);
+        BooleanQuery.Builder builder = new BooleanQuery.Builder();
+        keyWords.stream()
+                .map(word -> createQuery(word))
+                .forEach(query -> builder.add(query, BooleanClause.Occur.SHOULD));
         try {
-            TopDocs search = getIndexSearcher(pathToIndex).search(query, 10);
+            TopDocs search = getIndexSearcher(pathToIndex).search(builder.build(), 10);
             return asList(search.scoreDocs).stream()
                     .map(this::createResult).collect(Collectors.toList());
 
@@ -53,11 +51,10 @@ public class LuceneResultReadRepository implements ResultReadRepository {
         }
     }
 
-    private static Query createQuery(Set<String> keyWords) {
+    private static Query createQuery(String word) {
         try {
             QueryParser queryParser = new QueryParser("content", new MorfologikAnalyzer());
-            String next = keyWords.iterator().next();
-            return queryParser.parse(next);
+            return queryParser.parse(word);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

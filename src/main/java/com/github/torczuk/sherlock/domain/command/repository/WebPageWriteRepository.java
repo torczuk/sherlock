@@ -6,4 +6,5 @@ public interface WebPageWriteRepository {
 
     void write(WebPage webPage);
 
+    void flush();
 }

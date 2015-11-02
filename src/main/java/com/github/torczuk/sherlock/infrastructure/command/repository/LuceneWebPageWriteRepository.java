@@ -30,9 +30,17 @@ public class LuceneWebPageWriteRepository implements WebPageWriteRepository {
             IndexWriter index = getIndex();
             Document doc = documentFactory.create(webPage);
             index.addDocument(doc);
-            index.close();
         } catch (IOException e) {
             throw new AppException("can not add field to the index", e);
+        }
+    }
+
+    @Override
+    public void flush() {
+        try {
+            getIndex().close();
+        } catch (IOException e) {
+            throw new AppException(e);
         }
     }
 

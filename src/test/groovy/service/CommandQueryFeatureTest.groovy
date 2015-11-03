@@ -42,18 +42,35 @@ class CommandQueryFeatureTest extends Specification {
         0 == results2.size()
     }
 
-    def 'multiple search on pages should return the most accurate result' () {
+    def 'multiple search on pages should return any url containing keyword' () {
         given:
-        WebPage firstPage = new WebPage('http://example.com/1', new Content('Cat, dog, turtle, parrot'))
-        WebPage secondPage = new WebPage('http://example.com/2', new Content('parrot, fish'))
+        WebPage firstPage = new WebPage('http://example.com/1', new Content('Cukier, Jajka, masło, cebula'))
+        WebPage secondPage = new WebPage('http://example.com/2', new Content('parrot, ryba'))
 
         when:
-        writeRepository.write(firstPage)
-        writeRepository.write(secondPage)
+        writeRepository.write([firstPage, secondPage])
         writeRepository.flush();
-        List<Result> result = readRepository.find(['turtle', 'fish'] as Set)
+        List<Result> result = readRepository.find(['masło', 'ryba'] as Set)
 
         then:
-        2 == result.size()
+        ['http://example.com/1', 'http://example.com/2'] as Set == result.collect {it.url()} as Set
+    }
+
+    def 'multiple search on pages should return the most accurate url as first result' () {
+        given:
+        WebPage firstPage = new WebPage('http://example.com/1', new Content('Cukier, Jajka, masło, cebula'))
+        WebPage secondPage = new WebPage('http://example.com/2', new Content('cebula, ryba, jajka'))
+        WebPage third = new WebPage('http://example.com/3', new Content('jajka'))
+
+        when:
+        writeRepository.write([third, secondPage, firstPage])
+        writeRepository.flush();
+        List<Result> result = readRepository.find(['cukier', 'Jajka', 'Cebula'] as Set)
+
+        then:
+        3 == result.size()
+        'http://example.com/1' == result[0].url()
+        'http://example.com/2' == result[1].url()
+        'http://example.com/3' == result[2].url()
     }
 }

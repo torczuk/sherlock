@@ -12,6 +12,9 @@ import org.apache.lucene.store.FSDirectory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LuceneWebPageWriteRepository implements WebPageWriteRepository {
 
@@ -30,6 +33,17 @@ public class LuceneWebPageWriteRepository implements WebPageWriteRepository {
             IndexWriter index = getIndex();
             Document doc = documentFactory.create(webPage);
             index.addDocument(doc);
+        } catch (IOException e) {
+            throw new AppException("can not add field to the index", e);
+        }
+    }
+
+    @Override
+    public void write(Collection<WebPage> webPages) {
+        try{
+            IndexWriter index = getIndex();
+            Set<Document> documents = webPages.stream().map(webPage -> documentFactory.create(webPage)).collect(Collectors.toSet());
+            index.addDocuments(documents);
         } catch (IOException e) {
             throw new AppException("can not add field to the index", e);
         }

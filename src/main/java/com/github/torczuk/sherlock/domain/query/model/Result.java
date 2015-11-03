@@ -7,4 +7,8 @@ public class Result {
     public Result(String url) {
         this.url = url;
     }
+
+    public String url() {
+        return url;
+    }
 }

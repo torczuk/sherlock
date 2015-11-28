@@ -26,6 +26,6 @@ class TikaContentParserIntegrationTest extends Specification {
         String text = parser.parse(content)
 
         then:
-        'Some text goes here' == text
+        'Some text goes here...' == text
     }
 }

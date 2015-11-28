@@ -5,6 +5,7 @@ import com.github.torczuk.sherlock.domain.command.model.WebPage
 import com.github.torczuk.sherlock.domain.command.repository.WebPageWriteRepository
 import com.github.torczuk.sherlock.domain.query.model.Result
 import com.github.torczuk.sherlock.domain.query.repository.ResultReadRepository
+import com.github.torczuk.sherlock.infrastructure.command.factory.DocumentFactory
 import com.github.torczuk.sherlock.infrastructure.command.repository.LuceneWebPageWriteRepository
 import com.github.torczuk.sherlock.infrastructure.query.repository.LuceneResultReadRepository
 import org.junit.Rule
@@ -14,16 +15,13 @@ import spock.lang.Subject
 
 class CommandQueryFeatureTest extends Specification {
 
-    @Rule
-    private TemporaryFolder indexFolder = new TemporaryFolder()
-    @Subject
-    private WebPageWriteRepository writeRepository
-    @Subject
-    private ResultReadRepository readRepository
+    @Rule private TemporaryFolder indexFolder = new TemporaryFolder()
+    @Subject private WebPageWriteRepository writeRepository
+    @Subject private ResultReadRepository readRepository
 
     def setup() {
         String pathToIndex = indexFolder.root.absolutePath
-        writeRepository = new LuceneWebPageWriteRepository(pathToIndex)
+        writeRepository = new LuceneWebPageWriteRepository(pathToIndex, new DocumentFactory())
         readRepository = new LuceneResultReadRepository(pathToIndex)
     }
 

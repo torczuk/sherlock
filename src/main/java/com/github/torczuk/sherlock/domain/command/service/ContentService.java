@@ -1,6 +1,7 @@
 package com.github.torczuk.sherlock.domain.command.service;
 
 import com.github.torczuk.sherlock.domain.command.model.Content;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.stream.Collector;
 
+@Service
 public class ContentService {
     public Content from(String url) throws IOException {
         URL uri = new URL(url);

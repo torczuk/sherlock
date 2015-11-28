@@ -1,28 +1,32 @@
 package com.github.torczuk.sherlock.domain.command.service
 
+import com.github.torczuk.sherlock.Sherlock
+import com.github.torczuk.sherlock.domain.command.model.WebPage
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.SpringApplicationConfiguration
 import spock.lang.Specification
-import spock.lang.Subject
 
+@SpringApplicationConfiguration(classes = [ Sherlock.class ])
 class WebPageServiceFeatureTest extends Specification {
 
-    @Subject
-    private WebPageService webPageMapService = new WebPageService()
+    @Autowired private WebPageService webPageMapService
 
     def 'traverse the given location and find its all links'() {
         given:
         String homePage = 'http://127.0.0.1:4567'
 
         when:
-        def map = webPageMapService.getAll(homePage) as Set
+        Set<WebPage> map = webPageMapService.getAll(homePage)
 
         then:
-        def pages = map.collect { it.url } as Set
-        pages.contains('http://127.0.0.1:4567') == true
-        pages.contains('http://127.0.0.1:4567/') == true
-        pages.contains('http://127.0.0.1:4567/index.html') == true
-        pages.contains('http://127.0.0.1:4567/about.html') == true
-        pages.contains('http://127.0.0.1:4567/offer.html') == true
-        pages.contains('http://127.0.0.1:4567/about/history') == true
-        pages.contains('http://127.0.0.1:4567/about/index.html') == true
+        def urls = map.collect { page -> page.url } as Set
+        'http://127.0.0.1:4567' in urls
+        'http://127.0.0.1:4567' in urls
+        'http://127.0.0.1:4567/'in urls
+        'http://127.0.0.1:4567/index.html'in urls
+        'http://127.0.0.1:4567/about.html'in urls
+        'http://127.0.0.1:4567/offer.html'in urls
+        'http://127.0.0.1:4567/about/history'in urls
+        'http://127.0.0.1:4567/about/index.html'in urls
     }
 }

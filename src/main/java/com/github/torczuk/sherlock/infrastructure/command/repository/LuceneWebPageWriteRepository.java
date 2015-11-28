@@ -9,6 +9,9 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,15 +19,17 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Repository
 public class LuceneWebPageWriteRepository implements WebPageWriteRepository {
 
-    private String indexPath;
+    private final String indexPath;
+    private final DocumentFactory documentFactory;
     private IndexWriter indexWriter;
-    private DocumentFactory documentFactory;
 
-    public LuceneWebPageWriteRepository(String indexPath) {
-        this.documentFactory = new DocumentFactory();
+    @Autowired
+    public LuceneWebPageWriteRepository(@Value("index.dir.path")String indexPath, DocumentFactory documentFactory) {
         this.indexPath = indexPath;
+        this.documentFactory = documentFactory;
     }
 
     @Override

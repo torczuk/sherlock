@@ -1,17 +1,39 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.0.RELEASE'
+
+    }
+}
+
 import com.github.torczuk.sherlock.plugin.spark.SparkLauncher
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'groovy'
 apply plugin: SparkLauncher
+apply plugin: 'spring-boot'
 
 repositories {
     mavenCentral()
 }
 
+springBoot {
+    mainClass = "com.github.torczuk.sherlock.Sherlock"
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+    all*.exclude module : 'spring-boot-starter-logging'
+}
+
+
 dependencies {
     compile 'com.google.guava:guava:18.0'
-    compile 'org.springframework:spring-context:4.2.2.RELEASE'
     compile 'org.apache.tika:tika-core:1.10'
     compile 'org.apache.tika:tika-parsers:1.10'
     compile 'org.apache.lucene:lucene-core:5.3.1'
@@ -21,21 +43,32 @@ dependencies {
     compile 'org.apache.lucene:lucene-analyzers-morfologik:5.3.1'
     compile 'org.apache.lucene:lucene-analyzers-stempel:5.3.1'
 
-    testCompile  'com.sparkjava:spark-core:2.3'
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+        exclude module: "spring-boot-starter-logging"
+    }
+    compile("org.springframework.boot:spring-boot-starter-jetty") {
+        exclude module: "spring-boot-starter-logging"
+    }
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+
+    testCompile 'com.sparkjava:spark-core:2.3'
     testCompile 'junit:junit:4.11'
     testCompile 'org.codehaus.groovy:groovy-all:2.4.5'
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    testCompile 'org.spockframework:spock-spring:1.0-groovy-2.4'
+    testCompile 'org.springframework:spring-test:4.1.6.RELEASE'
+
 }
 
-//TODO: pass classpath to the buildscript
 sparkConfig {
     publicFiles = '/public'
     mapping = [
-            '/': file('src/test/resources/public/index.html').text,
-            '/index.html': file('src/test/resources/public/index.html').text,
-            '/about.html': file('src/test/resources/public/about.html').text,
-            '/offer.html': file('src/test/resources/public/offer.html').text,
-            '/about/history': file('src/test/resources/public/history.html').text,
+            '/'                : file('src/test/resources/public/index.html').text,
+            '/index.html'      : file('src/test/resources/public/index.html').text,
+            '/about.html'      : file('src/test/resources/public/about.html').text,
+            '/offer.html'      : file('src/test/resources/public/offer.html').text,
+            '/about/history'   : file('src/test/resources/public/history.html').text,
             '/about/index.html': ':)'
     ]
 }

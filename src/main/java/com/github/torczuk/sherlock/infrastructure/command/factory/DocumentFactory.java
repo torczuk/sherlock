@@ -5,7 +5,9 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DocumentFactory {
 
     public Document create(WebPage webPage) {

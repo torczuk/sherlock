@@ -9,6 +9,9 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.FSDirectory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,11 +21,13 @@ import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 
+@Repository
 public class LuceneResultReadRepository implements ResultReadRepository {
     private String pathToIndex;
     private IndexSearcher indexSearcher;
 
-    public LuceneResultReadRepository(String pathToIndex) {
+    @Autowired
+    public LuceneResultReadRepository(@Value("content.dir.path") String pathToIndex) {
         this.pathToIndex = pathToIndex;
     }
 

@@ -1,7 +1,9 @@
 package com.github.torczuk.sherlock.domain.command.model;
 
 import java.net.URI;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,31 +11,49 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.github.torczuk.sherlock.util.spliterators.MatcherSpliterator.matcherStream;
+import static java.lang.Integer.valueOf;
 import static java.util.stream.StreamSupport.stream;
 
 public class WebPage {
+    private static final Set<Integer> CHARS_TO_ESCAPE = new HashSet<>();
+    private static final Integer ESCAPED_CHAR = valueOf('_');
+
+    static {
+        CHARS_TO_ESCAPE.add(valueOf(':'));
+        CHARS_TO_ESCAPE.add(valueOf('/'));
+    }
+
     private static final String HREF_PATTERN = "href(\\s)*=(\\s)*\"([^\"]*)\"";
     private static final Pattern pattern = Pattern.compile(HREF_PATTERN);
 
-    final private Content content;
+    final private Optional<Content> content;
 
     final private String url;
 
-    public WebPage(String url, Content content) {
+    public WebPage(String url, Optional<Content> content) {
         this.url = url;
         this.content = content;
+    }
+
+    public WebPage(String url, Content content) {
+        this.url = url;
+        this.content = Optional.of(content);
     }
 
     public String url() {
         return url;
     }
 
-    public Content content() {
+    public Optional<Content> content() {
         return content;
     }
 
     public Set<String> urls() {
-        Stream<Matcher> stream = stream(matcherStream(pattern.matcher(content.toString())), false);
+        return content.map(value -> extractUrlsFrom(value.toString())).orElseGet(HashSet::new);
+    }
+
+    private Set<String> extractUrlsFrom(String text) {
+        Stream<Matcher> stream = stream(matcherStream(pattern.matcher(text)), false);
         return stream.filter((matcher) -> matcher.groupCount() == 3)
                 .map((matcher) -> matcher.group(3))
                 .map(href -> URI.create(url).resolve(href).toString())
@@ -56,5 +76,16 @@ public class WebPage {
     @Override
     public String toString() {
         return url;
+    }
+
+    public String fileNameUrl() {
+        return url().codePoints()
+                .map(WebPage::escapeUrl)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+    }
+
+    private static int escapeUrl(int sign) {
+        return CHARS_TO_ESCAPE.contains(sign) ? ESCAPED_CHAR : sign;
     }
 }

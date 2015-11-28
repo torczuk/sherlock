@@ -16,7 +16,7 @@ class WebPageServiceFeatureTest extends Specification {
         String homePage = 'http://127.0.0.1:4567'
 
         when:
-        Set<WebPage> map = webPageMapService.getAll(homePage)
+        Set<WebPage> map = webPageMapService.webPagesUnderDomain(homePage)
 
         then:
         def urls = map.collect { page -> page.url } as Set

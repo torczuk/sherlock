@@ -1,6 +1,5 @@
 package com.github.torczuk.sherlock.domain.command.service
 
-import com.github.torczuk.sherlock.domain.command.model.Content
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
@@ -8,20 +7,30 @@ import spock.lang.Subject
 
 class ContentServiceTest extends Specification {
 
-    @Subject
-    private ContentService contentService = new ContentService()
-    @Rule
-    private TemporaryFolder temporaryFolder = new TemporaryFolder();
+    @Subject private ContentService contentService = new ContentService()
+    @Rule private TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-    def 'find content for given entry point'() {
+    def 'should return content when requested location exists'() {
         given:
         String uri = locationToContent()
 
         when:
-        Content contentFor = contentService.from(uri)
+        Optional content = contentService.from(uri)
 
         then:
-        contentFor.toString() == 'Content of the file'
+        content.isPresent()
+        content.get().toString() == 'Content of the file'
+    }
+
+    def 'should return empty content when requested location is not found'() {
+        given:
+        String uri = 'non-existing-location'
+
+        when:
+        Optional content = contentService.from(uri)
+
+        then:
+        !content.isPresent()
     }
 
     String locationToContent() {

@@ -1,6 +1,5 @@
 package service
 
-import com.github.torczuk.sherlock.domain.command.model.Content
 import com.github.torczuk.sherlock.domain.command.model.WebPage
 import com.github.torczuk.sherlock.domain.command.repository.WebPageWriteRepository
 import com.github.torczuk.sherlock.domain.query.model.Result
@@ -12,6 +11,8 @@ import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 import spock.lang.Subject
+
+import static com.github.torczuk.sherlock.domain.command.model.Content.content
 
 class CommandQueryFeatureTest extends Specification {
 
@@ -27,7 +28,7 @@ class CommandQueryFeatureTest extends Specification {
 
     def 'should update model first and next execute search'() {
         given:
-        WebPage webPage = new WebPage('http://example.com', new Content('Najlepsze na świecie pierogi z jajek, masła orzechowego i mąki robi moja mama'))
+        WebPage webPage = new WebPage('http://example.com', content('Najlepsze na świecie pierogi z jajek, masła orzechowego i mąki robi moja mama'))
 
         when:
         writeRepository.write(webPage)
@@ -36,14 +37,14 @@ class CommandQueryFeatureTest extends Specification {
         List<Result> results2 = readRepository.find(['orzechy'] as Set)
 
         then:
-        1 == results.size()
-        0 == results2.size()
+        results.size() == 1
+        results2.size() == 0
     }
 
-    def 'multiple search on pages should return any url containing keyword' () {
+    def 'multiple search on pages should return any url containing keyword'() {
         given:
-        WebPage firstPage = new WebPage('http://example.com/1', new Content('Cukier, Jajka, masło, cebula'))
-        WebPage secondPage = new WebPage('http://example.com/2', new Content('parrot, ryba'))
+        WebPage firstPage = new WebPage('http://example.com/1', content('Cukier, Jajka, masło, cebula'))
+        WebPage secondPage = new WebPage('http://example.com/2', content('parrot, ryba'))
 
         when:
         writeRepository.write([firstPage, secondPage])
@@ -51,14 +52,14 @@ class CommandQueryFeatureTest extends Specification {
         List<Result> result = readRepository.find(['masło', 'ryba'] as Set)
 
         then:
-        ['http://example.com/1', 'http://example.com/2'] as Set == result.collect {it.url()} as Set
+        result.collect { it.url() } as Set == ['http://example.com/1', 'http://example.com/2'] as Set
     }
 
-    def 'multiple search on pages should return the most accurate url as first result' () {
+    def 'multiple search on pages should return the most accurate url as first result'() {
         given:
-        WebPage firstPage = new WebPage('http://example.com/1', new Content('Cukier, Jajka, masło, cebula'))
-        WebPage secondPage = new WebPage('http://example.com/2', new Content('cebula, ryba, jajka'))
-        WebPage third = new WebPage('http://example.com/3', new Content('jajka'))
+        WebPage firstPage = new WebPage('http://example.com/1', content('Cukier, Jajka, masło, cebula'))
+        WebPage secondPage = new WebPage('http://example.com/2', content('cebula, ryba, jajka'))
+        WebPage third = new WebPage('http://example.com/3', content('jajka'))
 
         when:
         writeRepository.write([third, secondPage, firstPage])
@@ -67,8 +68,8 @@ class CommandQueryFeatureTest extends Specification {
 
         then:
         3 == result.size()
-        'http://example.com/1' == result[0].url()
-        'http://example.com/2' == result[1].url()
-        'http://example.com/3' == result[2].url()
+        result[0].url() == 'http://example.com/1'
+        result[1].url() == 'http://example.com/2'
+        result[2].url() == 'http://example.com/3'
     }
 }

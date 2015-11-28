@@ -21,7 +21,7 @@ public class WebPageService {
         this.factory = factory;
     }
 
-    public Set<WebPage> getAll(String homePage) throws IOException {
+    public Set<WebPage> webPagesUnderDomain(String homePage) throws IOException {
         Set<WebPage> result = new LinkedHashSet<>();
         Queue<String> locations = new LinkedList<>();
         locations.add(homePage);

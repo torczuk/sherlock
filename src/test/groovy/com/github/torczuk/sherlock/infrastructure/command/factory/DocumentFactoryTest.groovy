@@ -5,8 +5,10 @@ import com.github.torczuk.sherlock.domain.command.model.WebPage
 import org.apache.lucene.document.Document
 import spock.lang.Specification
 
+import static com.github.torczuk.sherlock.domain.command.model.Content.content
+
 class DocumentFactoryTest extends Specification {
-    private WebPage webPage = new WebPage('example.com', new Content('some content'))
+    private WebPage webPage = new WebPage('example.com', Optional.of(content('some content')))
 
     def 'create Document having conent and url fields from WebPage' (){
         given:
@@ -28,7 +30,7 @@ class DocumentFactoryTest extends Specification {
         Document create = documentFactory.create(webPage)
 
         then:
-        false == create.getField('content').fieldType().stored()
-        true == create.getField('url').fieldType().stored()
+        !create.getField('content').fieldType().stored()
+        create.getField('url').fieldType().stored()
     }
 }

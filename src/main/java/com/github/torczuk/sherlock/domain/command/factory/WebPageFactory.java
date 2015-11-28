@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class WebPageFactory {
@@ -19,7 +20,7 @@ public class WebPageFactory {
     }
 
     public WebPage create(String url) throws IOException {
-        Content content = contentService.from(url);
+        Optional<Content> content = contentService.from(url);
         return new WebPage(url, content);
     }
 

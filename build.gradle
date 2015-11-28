@@ -42,6 +42,7 @@ dependencies {
     compile 'org.apache.lucene:lucene-queries:5.3.1'
     compile 'org.apache.lucene:lucene-analyzers-morfologik:5.3.1'
     compile 'org.apache.lucene:lucene-analyzers-stempel:5.3.1'
+    compile 'io.projectreactor:reactor-bus:2.0.7.RELEASE'
 
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
@@ -71,6 +72,12 @@ sparkConfig {
             '/about/history'   : file('src/test/resources/public/history.html').text,
             '/about/index.html': ':)'
     ]
+}
+
+test {
+    afterTest { desc, result ->
+        println "RUNNING  ${desc.name} [${desc.className}] result: ${result.resultType}"
+    }
 }
 
 test.dependsOn startSpark

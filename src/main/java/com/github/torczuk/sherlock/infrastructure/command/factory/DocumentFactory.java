@@ -13,7 +13,7 @@ public class DocumentFactory {
     public Document create(WebPage webPage) {
         Document doc = new Document();
         doc.add(new StringField("url", webPage.url(), Field.Store.YES));
-        doc.add(new TextField("content", webPage.content().toString(), Field.Store.NO));
+        doc.add(new TextField("content", webPage.content().get().toString(), Field.Store.NO));
         return doc;
     }
 }

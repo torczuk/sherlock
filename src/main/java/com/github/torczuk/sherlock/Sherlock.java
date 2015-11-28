@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 import java.util.Arrays;
 
 @SpringBootApplication
-@PropertySource(value={"classpath:sherlock.properties"})
+@PropertySource(value={"classpath:application.properties"})
 public class Sherlock {
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(Sherlock.class, args);

@@ -2,22 +2,17 @@ package com.github.torczuk.sherlock.domain.command.service;
 
 import com.github.torczuk.sherlock.domain.command.model.Content;
 import com.github.torczuk.sherlock.domain.command.model.WebPage;
-import com.google.common.eventbus.Subscribe;
+import com.github.torczuk.sherlock.domain.exception.AppException;
+import org.springframework.stereotype.Service;
+import reactor.bus.Event;
+import reactor.fn.Consumer;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
-public class SavePageContentSubscriber {
-    private static final Set<Integer> CHARS_TO_ESCAPE = new HashSet<>();
-    private static final Integer ESCAPED_CHAR = Integer.valueOf('_');
-
-    static {
-        CHARS_TO_ESCAPE.add(Integer.valueOf(':'));
-        CHARS_TO_ESCAPE.add(Integer.valueOf('/'));
-    }
+//@Service
+public class SavePageContentSubscriber implements Consumer<Event<WebPage>> {
 
     private String dir;
 
@@ -25,21 +20,20 @@ public class SavePageContentSubscriber {
         this.dir = dir;
     }
 
-    @Subscribe
-    public void save(WebPage webPage) throws IOException {
-        Content content = webPage.content();
-        String transformedUrl = webPage.url().codePoints()
-                .map(this::escapeUrl)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
+    public void accept(Event<WebPage> event) {
+        WebPage webPage = event.getData();
+        if (webPage.content().isPresent()) {
+            Content content = webPage.content().get();
+            String transformedUrl = webPage.fileNameUrl();
 
-        File file = new File(dir, transformedUrl);
-        try (FileWriter fw = new FileWriter(file);) {
-            fw.write(content.toString());
+            File file = new File(dir, transformedUrl);
+            try (FileWriter fw = new FileWriter(file);) {
+                fw.write(content.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new AppException(e);
+            }
         }
     }
 
-    private int escapeUrl(int sign) {
-        return CHARS_TO_ESCAPE.contains(sign) ? ESCAPED_CHAR : sign;
-    }
 }

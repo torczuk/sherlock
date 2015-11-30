@@ -1,4 +1,4 @@
-package com.github.torczuk.sherlock.util;
+package com.github.torczuk.sherlock;
 
 import static spark.Spark.*;
 

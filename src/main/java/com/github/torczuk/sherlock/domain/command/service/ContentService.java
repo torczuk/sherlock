@@ -1,6 +1,8 @@
 package com.github.torczuk.sherlock.domain.command.service;
 
 import com.github.torczuk.sherlock.domain.command.model.Content;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -12,8 +14,11 @@ import java.util.stream.Collector;
 
 @Service
 public class ContentService {
+    private static final Logger logger = LoggerFactory.getLogger(ContentService.class);
+
     public Optional<Content> from(String url) {
         try {
+            logger.info("Getting content for url {}", url);
             URL uri = new URL(url);
             try (BufferedReader br = new BufferedReader(new InputStreamReader(uri.openStream()))) {
                 String value = br.lines().collect(Collector.of(StringBuilder::new,
@@ -23,7 +28,7 @@ public class ContentService {
                 return Optional.of(new Content(value));
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.error("Can not read content", ex);
             return Optional.empty();
         }
     }

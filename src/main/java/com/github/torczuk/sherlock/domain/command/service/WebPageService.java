@@ -14,11 +14,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class WebPageService {
-    private WebPageFactory factory;
+    final private WebPageFactory factory;
+    final private WebPagePublisher publisher;
 
     @Autowired
-    public WebPageService(WebPageFactory factory) {
+    public WebPageService(WebPageFactory factory, WebPagePublisher publisher) {
         this.factory = factory;
+        this.publisher = publisher;
     }
 
     public Set<WebPage> webPagesUnderDomain(String homePage) throws IOException {
@@ -31,6 +33,7 @@ public class WebPageService {
             WebPage webPage = factory.create(page);
             if (!result.contains(webPage)) {
                 locations.addAll(urlsInDomain(homePage, webPage));
+                publisher.publish(webPage);
             }
             result.add(webPage);
         }

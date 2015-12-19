@@ -32,7 +32,7 @@ public class WebPageService {
             String page = locations.poll();
             WebPage webPage = factory.create(page);
             if (!result.contains(webPage)) {
-                locations.addAll(urlsInDomain(homePage, webPage));
+                locations.addAll(selectDomainUrlsFromWebPage(homePage, webPage));
                 publisher.publish(webPage);
             }
             result.add(webPage);
@@ -40,9 +40,9 @@ public class WebPageService {
         return result;
     }
 
-    private static Set<String> urlsInDomain(String homePage, WebPage webPage) {
+    private static Set<String> selectDomainUrlsFromWebPage(String domain, WebPage webPage) {
         return webPage.urls().stream()
-                .filter(url -> url.startsWith(homePage))
+                .filter(url -> url.startsWith(domain))
                 .collect(Collectors.toSet());
     }
 }

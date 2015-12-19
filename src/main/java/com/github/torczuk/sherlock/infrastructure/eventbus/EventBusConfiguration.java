@@ -24,7 +24,7 @@ public class EventBusConfiguration {
     }
 
     @PostConstruct
-    public void postConstruct() {
+    public void registerEventBusConsumers() {
         logger.info("Configuring event bus ...");
         eventBus.on($("webPage"), luceneIndexerBuilderConsumer);
     }

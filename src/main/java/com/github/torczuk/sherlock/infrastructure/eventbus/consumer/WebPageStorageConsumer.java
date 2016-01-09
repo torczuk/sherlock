@@ -1,4 +1,4 @@
-package com.github.torczuk.sherlock.infrastructure.eventbus;
+package com.github.torczuk.sherlock.infrastructure.eventbus.consumer;
 
 import com.github.torczuk.sherlock.domain.command.model.WebPage;
 import org.slf4j.Logger;
@@ -9,8 +9,8 @@ import reactor.fn.Consumer;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Service
-public class LuceneIndexerBuilderConsumer implements Consumer<Event<WebPage>> {
-    private static final Logger logger = getLogger(LuceneIndexerBuilderConsumer.class);
+public class WebPageStorageConsumer implements Consumer<Event<WebPage>> {
+    private static final Logger logger = getLogger(WebPageStorageConsumer.class);
 
     @Override public void accept(Event<WebPage> event) {
         WebPage webPage = event.getData();

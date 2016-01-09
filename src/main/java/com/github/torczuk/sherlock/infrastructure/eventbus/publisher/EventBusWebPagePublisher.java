@@ -1,4 +1,4 @@
-package com.github.torczuk.sherlock.infrastructure.eventbus;
+package com.github.torczuk.sherlock.infrastructure.eventbus.publisher;
 
 import com.github.torczuk.sherlock.domain.command.model.WebPage;
 import com.github.torczuk.sherlock.domain.command.service.WebPagePublisher;

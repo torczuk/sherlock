@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 
-import static com.github.torczuk.sherlock.testutils.Stubs.getWEB_PAGE_WITHOUT_URLS
+import static com.github.torczuk.sherlock.testutils.Stubs.WEB_PAGE_WITHOUT_URLS
 import static org.mockito.Matchers.argThat
 import static org.mockito.Mockito.verify;
 

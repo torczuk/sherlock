@@ -4,7 +4,7 @@ import com.github.torczuk.sherlock.domain.command.model.WebPage;
 
 import java.util.Collection;
 
-public interface WebPageWriteRepository {
+public interface WebPageWriter {
 
     void write(WebPage webPage);
 

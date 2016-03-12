@@ -2,7 +2,7 @@ package com.github.torczuk.sherlock.infrastructure.eventbus.publisher
 
 import com.github.torczuk.sherlock.Sherlock
 import com.github.torczuk.sherlock.domain.command.model.WebPage
-import com.github.torczuk.sherlock.infrastructure.eventbus.consumer.LuceneIndexerBuilderConsumer
+import com.github.torczuk.sherlock.infrastructure.eventbus.consumer.SaveToFilePageContentConsumer
 import com.github.torczuk.sherlock.infrastructure.eventbus.consumer.WebPageStorageConsumer
 import com.github.torczuk.sherlock.testutils.Stubs
 import com.github.torczuk.sherlock.util.matcher.HasTheSameWebPageAs
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.verify
 class EventBusWebPagePublisherIntegrationTest {
 
     @Autowired EventBusWebPagePublisher eventBusWebPagePublisher
-    @Autowired @ReplaceWithMock LuceneIndexerBuilderConsumer indexerBuilderConsumer
+    @Autowired @ReplaceWithMock SaveToFilePageContentConsumer saveToFilePageContentConsumer
     @Autowired @ReplaceWithMock WebPageStorageConsumer webPageStorageConsumer
 
     @Test
@@ -34,7 +34,7 @@ class EventBusWebPagePublisherIntegrationTest {
 
         eventBusWebPagePublisher.publish(webPage)
 
-        verify(indexerBuilderConsumer).accept(argThat(new HasTheSameWebPageAs(webPage)))
+        verify(saveToFilePageContentConsumer).accept(argThat(new HasTheSameWebPageAs(webPage)))
         verify(webPageStorageConsumer).accept(argThat(new HasTheSameWebPageAs(webPage)))
     }
 }

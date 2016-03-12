@@ -1,7 +1,7 @@
 package com.github.torczuk.sherlock.infrastructure.command.repository;
 
 import com.github.torczuk.sherlock.domain.command.model.WebPage;
-import com.github.torczuk.sherlock.domain.command.repository.WebPageWriteRepository;
+import com.github.torczuk.sherlock.domain.command.repository.WebPageWriter;
 import com.github.torczuk.sherlock.domain.exception.AppException;
 import com.github.torczuk.sherlock.infrastructure.command.factory.DocumentFactory;
 import org.apache.lucene.analysis.morfologik.MorfologikAnalyzer;
@@ -20,14 +20,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
-public class LuceneWebPageWriteRepository implements WebPageWriteRepository {
+public class LuceneWebPageWriter implements WebPageWriter {
 
     private final String indexPath;
     private final DocumentFactory documentFactory;
     private IndexWriter indexWriter;
 
     @Autowired
-    public LuceneWebPageWriteRepository(@Value("${index.dir.path}")String indexPath, DocumentFactory documentFactory) {
+    public LuceneWebPageWriter(@Value("${index.dir.path}") String indexPath, DocumentFactory documentFactory) {
         this.indexPath = indexPath;
         this.documentFactory = documentFactory;
     }

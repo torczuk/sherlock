@@ -2,21 +2,22 @@ package com.github.torczuk.sherlock.domain.command.service
 
 import com.github.torczuk.sherlock.domain.command.model.Content
 import com.github.torczuk.sherlock.domain.command.model.WebPage
+import com.github.torczuk.sherlock.infrastructure.eventbus.consumer.SaveToFilePageContentConsumer
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import reactor.bus.Event
 import spock.lang.Specification
 import spock.lang.Subject
 
-class SavePageContentSubscriberTest extends Specification {
+class SaveToFilePageContentConsumerTest extends Specification {
 
     @Rule
     TemporaryFolder temporaryFolder = new TemporaryFolder()
     @Subject
-    SavePageContentSubscriber savePageContentSubscriber
+    SaveToFilePageContentConsumer savePageContentSubscriber
 
     def setup() {
-        savePageContentSubscriber = new SavePageContentSubscriber(temporaryFolder.root.absolutePath)
+        savePageContentSubscriber = new SaveToFilePageContentConsumer(temporaryFolder.root.absolutePath)
     }
 
     def 'save content page on disc under specified directory'() {

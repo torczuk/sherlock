@@ -6,6 +6,7 @@ import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.sax.BodyContentHandler;
+import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+@Service
 public class TikaContentParser implements ContentParser {
 
     @Override

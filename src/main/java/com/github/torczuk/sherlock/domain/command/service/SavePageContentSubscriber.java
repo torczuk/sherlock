@@ -3,6 +3,8 @@ package com.github.torczuk.sherlock.domain.command.service;
 import com.github.torczuk.sherlock.domain.command.model.Content;
 import com.github.torczuk.sherlock.domain.command.model.WebPage;
 import com.github.torczuk.sherlock.domain.exception.AppException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import reactor.bus.Event;
 import reactor.fn.Consumer;
@@ -11,12 +13,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-//@Service
+@Service
 public class SavePageContentSubscriber implements Consumer<Event<WebPage>> {
 
     private String dir;
 
-    public SavePageContentSubscriber(String dir) {
+    @Autowired
+    public SavePageContentSubscriber(@Value("${content.dir.path}")String dir) {
         this.dir = dir;
     }
 

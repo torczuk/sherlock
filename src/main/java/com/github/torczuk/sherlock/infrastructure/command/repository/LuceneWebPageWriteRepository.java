@@ -27,7 +27,7 @@ public class LuceneWebPageWriteRepository implements WebPageWriteRepository {
     private IndexWriter indexWriter;
 
     @Autowired
-    public LuceneWebPageWriteRepository(@Value("index.dir.path")String indexPath, DocumentFactory documentFactory) {
+    public LuceneWebPageWriteRepository(@Value("${index.dir.path}")String indexPath, DocumentFactory documentFactory) {
         this.indexPath = indexPath;
         this.documentFactory = documentFactory;
     }

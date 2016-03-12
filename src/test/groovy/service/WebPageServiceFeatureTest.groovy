@@ -4,8 +4,10 @@ import com.github.torczuk.sherlock.Sherlock
 import com.github.torczuk.sherlock.domain.command.model.WebPage
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.SpringApplicationConfiguration
+import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
+@ActiveProfiles("test")
 @SpringApplicationConfiguration(classes = [ Sherlock.class ])
 class WebPageServiceFeatureTest extends Specification {
 

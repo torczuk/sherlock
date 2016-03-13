@@ -2,6 +2,7 @@ package com.github.torczuk.sherlock.domain.command.service
 
 import com.github.torczuk.sherlock.domain.command.factory.WebPageFactory
 import com.github.torczuk.sherlock.domain.command.model.WebPage
+import com.github.torczuk.sherlock.testutils.Stubs
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -11,7 +12,7 @@ class WebPageServiceTest extends Specification {
 
     static final String WEB_PAGE_URL = 'http://example.com'
 
-    WebPage webPage = new WebPage(WEB_PAGE_URL, TEXT_WITHOUT_URLS)
+    WebPage webPage = new WebPage(WEB_PAGE_URL, Stubs.TEXT_WITHOUT_URLS)
 
     private WebPageFactory factory = Mock()
     private WebPagePublisher publisher = Mock()

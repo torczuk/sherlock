@@ -75,10 +75,30 @@ sparkConfig {
 }
 
 test {
+    exclude '**/*FeatureTest*'
+    exclude '**/*SystemTest*'
+    exclude '**/*IntegrationTest*'
     afterTest { desc, result ->
         println "RUNNING  ${desc.name} [${desc.className}] result: ${result.resultType}"
     }
 }
 
-test.dependsOn startSpark
-test.finalizedBy stopSpark
+
+task(integrationTest, type: Test) {
+    include '**/*IntegrationTest*'
+
+    afterTest { desc, result ->
+        println "RUNNING  ${desc.name} [${desc.className}] result: ${result.resultType}"
+    }
+}
+
+task(systemTest, type: Test) {
+    include '**/*FeatureTest*'
+
+    afterTest { desc, result ->
+        println "RUNNING  ${desc.name} [${desc.className}] result: ${result.resultType}"
+    }
+}
+
+systemTest.dependsOn startSpark
+systemTest.finalizedBy stopSpark

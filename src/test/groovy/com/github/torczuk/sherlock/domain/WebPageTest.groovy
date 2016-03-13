@@ -24,19 +24,27 @@ and some other links to the other pages <a href="http://google.pl">google</a>
                            'http://google.pl'] as Set
     }
 
-    def 'should return valid file name representation of url'() {
-        given:
-        WebPage webPage = new WebPage('http://example.com', Optional.of(content(text)))
-
-        expect:
-        webPage.fileNameUrl() == 'http___example.com'
-    }
-
     def 'should return empty urls for missing content'() {
         given:
         WebPage webPage = new WebPage('http://example.com', Optional.empty())
 
         expect:
         webPage.urls().empty
+    }
+
+    def 'should return the host of a web page'() {
+        given:
+        WebPage webPage = new WebPage('http://example.com', Optional.empty())
+
+        expect:
+        webPage.host() == 'example.com'
+    }
+
+    def 'should return the path of a web page'() {
+        given:
+        WebPage webPage = new WebPage('http://example.com/some/path.html', Optional.empty())
+
+        expect:
+        webPage.path() == '/some/path.html'
     }
 }

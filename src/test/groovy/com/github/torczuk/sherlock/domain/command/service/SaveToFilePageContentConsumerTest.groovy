@@ -20,7 +20,7 @@ class SaveToFilePageContentConsumerTest extends Specification {
         savePageContentSubscriber = new SaveToFilePageContentConsumer(temporaryFolder.root.absolutePath)
     }
 
-    def 'save content page on disc under specified directory'() {
+    def 'save content page on disc under specified host directory for main page'() {
         given:
         WebPage webPage = new WebPage('http://example.com', Optional.of(new Content('any content')))
 
@@ -28,6 +28,17 @@ class SaveToFilePageContentConsumerTest extends Specification {
         savePageContentSubscriber.accept(Event.wrap(webPage))
 
         then:
-        'any content' == new File(temporaryFolder.root.absolutePath, "http___example.com").text
+        'any content' == new File(temporaryFolder.root.absolutePath, "example.com").text
+    }
+
+    def 'save content page on disc under specified host directory for any sub page'() {
+        given:
+        WebPage webPage = new WebPage('http://example.com/sub-page/index.html', Optional.of(new Content('any content')))
+
+        when:
+        savePageContentSubscriber.accept(Event.wrap(webPage))
+
+        then:
+        'any content' == new File(temporaryFolder.root.absolutePath + "/example.com/sub-page", "index.html").text
     }
 }

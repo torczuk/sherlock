@@ -1,6 +1,8 @@
 package com.github.torczuk.sherlock.domain.command.model;
 
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
@@ -11,18 +13,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.github.torczuk.sherlock.util.spliterators.MatcherSpliterator.matcherStream;
-import static java.lang.Integer.valueOf;
 import static java.util.stream.StreamSupport.stream;
 
 public class WebPage {
-    private static final Set<Integer> CHARS_TO_ESCAPE = new HashSet<>();
-    private static final Integer ESCAPED_CHAR = valueOf('_');
-
-    static {
-        CHARS_TO_ESCAPE.add(valueOf(':'));
-        CHARS_TO_ESCAPE.add(valueOf('/'));
-    }
-
     private static final String HREF_PATTERN = "href(\\s)*=(\\s)*\"([^\"]*)\"";
     private static final Pattern pattern = Pattern.compile(HREF_PATTERN);
 
@@ -31,11 +24,13 @@ public class WebPage {
     final private String url;
 
     public WebPage(String url, Optional<Content> content) {
+        validate(url);
         this.url = url;
         this.content = content;
     }
 
     public WebPage(String url, Content content) {
+        validate(url);
         this.url = url;
         this.content = Optional.of(content);
     }
@@ -78,14 +73,27 @@ public class WebPage {
         return url;
     }
 
-    public String fileNameUrl() {
-        return url().codePoints()
-                .map(WebPage::escapeUrl)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
+    public String host() {
+        try {
+            return new URL(url).getHost();
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
 
-    private static int escapeUrl(int sign) {
-        return CHARS_TO_ESCAPE.contains(sign) ? ESCAPED_CHAR : sign;
+    public String path() {
+        try {
+            return new URL(url).getPath();
+        } catch (MalformedURLException e) {
+            return null;
+        }
+    }
+
+    private static void validate(String url) {
+        try {
+            new URL(url);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
